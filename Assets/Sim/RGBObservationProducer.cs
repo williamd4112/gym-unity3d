@@ -12,20 +12,15 @@ public class RGBObservationProducer : ObservationProducer {
     private byte[] m_DepthBuffer;
 
     private RGBDDataFetcher m_RGBDataFetcher;
-    private Mutex m_ObservationMutex;
 
-    public override byte[] GetObservation()
+    public override void GetObservation(out byte[] buffer)
     {
-        m_ObservationMutex.WaitOne();
-        m_RGBDataFetcher.GetRGBObservation(ref m_RGBBuffer);
-        m_ObservationMutex.ReleaseMutex();
-
-        return m_RGBBuffer;
+        buffer = m_RGBBuffer;
+        m_RGBDataFetcher.GetRGBObservation(ref buffer);
     }
 
     void Start ()
     {
-        m_ObservationMutex = new Mutex();
         m_RGBDataFetcher = GetComponent<RGBDDataFetcher>();
         m_RGBBuffer = new byte[m_RGBDataFetcher.GetRGBTextureSize()];
         m_DepthBuffer = new byte[m_RGBDataFetcher.GetDepthTextureSize()];

@@ -23,9 +23,12 @@ public class NetworkController : MonoBehaviour {
 
     [SerializeField]
     private ObservationProducer m_ObservationProducer;
+    private byte[] m_Observation;
+    private Mutex m_ObservationMutex;
 
     void Start()
     {
+        m_ObservationMutex = new Mutex();
         if (Application.isEditor) { 
             Application.runInBackground = true;
         }
@@ -36,7 +39,9 @@ public class NetworkController : MonoBehaviour {
 
     void Update()
     {
-        m_ObservationProducer.GetObservation();
+        m_ObservationMutex.WaitOne();
+        m_ObservationProducer.GetObservation(out m_Observation);
+        m_ObservationMutex.ReleaseMutex();
     }
 
     void OnApplicationQuit()
@@ -63,7 +68,9 @@ public class NetworkController : MonoBehaviour {
                 
                 int recvData = BitConverter.ToInt32(recvBuffer, 0);
 
-                Debug.Log("Receive: " + recvData);
+                m_ObservationMutex.WaitOne();
+                m_ClientSocket.Send(m_Observation);
+                m_ObservationMutex.ReleaseMutex();
             }
              m_ClientSocket.Close();
             Debug.Log("Disconnected.");

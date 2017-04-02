@@ -5,5 +5,5 @@ using System;
 
 abstract public class ObservationProducer : MonoBehaviour {
 
-    abstract public byte[] GetObservation();
+    abstract public void GetObservation(out byte[] buffer);
 }
