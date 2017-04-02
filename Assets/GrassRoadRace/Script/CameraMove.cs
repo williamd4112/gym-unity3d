@@ -24,7 +24,7 @@ public class CameraMove : MonoBehaviour {
 	{
 		MoveObj ();
 		
-		if (Input.GetKeyDown (KeyCode.A)) {
+		if (Input.GetKeyDown (KeyCode.A)) {  
 			ChangeView01();
 		}
 		

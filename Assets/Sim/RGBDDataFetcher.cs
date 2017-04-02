@@ -6,7 +6,7 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
-public class RGBDObservationProducer : PostEffectsBase {
+public class RGBDDataFetcher : PostEffectsBase {
 
     [SerializeField]
     private Material m_DepthMaterial;
@@ -19,14 +19,24 @@ public class RGBDObservationProducer : PostEffectsBase {
     [SerializeField]
     private bool m_IsRenderToScreen = true;
 
-    public byte[] GetRGBObservation()
+    public int GetDepthTextureSize()
     {
-        return GetRenderTextureByteData(m_ScreenTexture);
+        return m_DepthTexture.width * m_DepthTexture.height * Marshal.SizeOf(typeof(Color));
     }
 
-    public byte[] GetDepthObservation()
+    public int GetRGBTextureSize()
     {
-        return GetRenderTextureByteData(m_DepthTexture);
+        return m_ScreenTexture.width * m_ScreenTexture.height * Marshal.SizeOf(typeof(Color));
+    }
+
+    public void GetRGBObservation(ref byte[] bytes)
+    {
+        GetRenderTextureByteData(m_ScreenTexture, ref bytes);
+    }
+
+    public void GetDepthObservation(ref byte[] bytes)
+    {
+        GetRenderTextureByteData(m_DepthTexture, ref bytes);
     }
 
     void OnEnable()
@@ -53,13 +63,17 @@ public class RGBDObservationProducer : PostEffectsBase {
         }
     }
 
-    static public byte[] GetRenderTextureByteData(RenderTexture renderTexture)
+    override public bool CheckResources()
+    {
+        return isSupported;
+    }
+
+    static public void GetRenderTextureByteData(RenderTexture renderTexture, ref byte[] bytes)
     {
         Texture2D texture2d = GetRTPixels(renderTexture);
         Color[] colors = texture2d.GetPixels(0, 0, renderTexture.width, renderTexture.height);
-        byte[] byte_colors = ColorArrayToByteArray(colors);
 
-        return byte_colors;
+        ColorArrayToByteArray(colors, ref bytes);
     }
 
     static public Texture2D GetRTPixels(RenderTexture rt)
@@ -79,14 +93,12 @@ public class RGBDObservationProducer : PostEffectsBase {
         return tex;
     }
 
-    static public byte[] ColorArrayToByteArray(Color[] colors)
+    static public byte[] ColorArrayToByteArray(Color[] colors, ref byte[] bytes)
     {
         if (colors == null || colors.Length == 0)
             return null;
 
-        int lengthOfColor = Marshal.SizeOf(typeof(Color));
-        int length = lengthOfColor * colors.Length;
-        byte[] bytes = new byte[length];
+        int length = bytes.Length;
 
         GCHandle handle = default(GCHandle);
         try
@@ -103,5 +115,4 @@ public class RGBDObservationProducer : PostEffectsBase {
 
         return bytes;
     }
-
 }
