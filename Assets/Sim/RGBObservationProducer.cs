@@ -9,7 +9,6 @@ using UnityEngine;
 public class RGBObservationProducer : ObservationProducer {
 
     private byte[] m_RGBBuffer;
-    private byte[] m_DepthBuffer;
 
     private RGBDDataFetcher m_RGBDataFetcher;
 
@@ -23,7 +22,6 @@ public class RGBObservationProducer : ObservationProducer {
     {
         m_RGBDataFetcher = GetComponent<RGBDDataFetcher>();
         m_RGBBuffer = new byte[m_RGBDataFetcher.GetRGBTextureSize()];
-        m_DepthBuffer = new byte[m_RGBDataFetcher.GetDepthTextureSize()];
 	}
 	
 }

@@ -26,8 +26,14 @@ public class NetworkController : MonoBehaviour {
     private byte[] m_Observation;
     private Mutex m_ObservationMutex;
 
+    [SerializeField]
+    private NetworkInputDecoder m_NetworkInputDecoder;
+
     void Start()
     {
+        Debug.Assert(m_NetworkInputDecoder != null);
+        Debug.Assert(m_ObservationProducer != null);
+
         m_ObservationMutex = new Mutex();
         if (Application.isEditor) { 
             Application.runInBackground = true;
@@ -64,10 +70,13 @@ public class NetworkController : MonoBehaviour {
             Debug.Log("Connected.");
 
             while (!m_IsShutdown && IsSocketAlive(m_ClientSocket)) {
+                /* Receive input */
                 m_ClientSocket.Receive(recvBuffer);
-                
-                int recvData = BitConverter.ToInt32(recvBuffer, 0);
 
+                /* Decode input */
+                m_NetworkInputDecoder.Decode(ref recvBuffer);
+
+                /* Respond with observation, reward, done, info */
                 m_ObservationMutex.WaitOne();
                 m_ClientSocket.Send(m_Observation);
                 m_ObservationMutex.ReleaseMutex();

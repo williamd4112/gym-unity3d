@@ -53,7 +53,7 @@ class Unity3DEnvironment(object):
 		
 		# TODO: Define action space according to scene
 		# Now testing default size=6 action space
-		self.action_space = DiscreteActionSpace(6)
+		self.action_space = DiscreteActionSpace(3)
 		
 		# TODO: Define observation space according to scene
 		# Now testing default size=256*256*4 observation space
@@ -95,7 +95,9 @@ if __name__ == '__main__':
 	
 	env.reset()
 	
-	for t in xrange(100):
-		env.step(env.sample())
+	for t in xrange(10000):
+		act = env.sample()
+		print ('Take action ', act)
+		env.step(act)
 		env.render()
 	env.close()
