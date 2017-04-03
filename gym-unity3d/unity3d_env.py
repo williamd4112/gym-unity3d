@@ -22,8 +22,26 @@ def image_unity3d_to_cv2(data):
 class DiscreteActionSpace(object):
 	def __init__(self, num_action):
 		self.n = num_action
+		
 	def sample(self):
 		return random.randint(0, self.n)
+		
+	def pack(self, act):
+		return struct.pack("I", act)
+		
+class ContinuousActionSpace(object):
+	def __init__(self, num_dim):
+		self.n = num_dim
+		self.mu = 0.0
+		self.sigma = 1.0
+		self.pack_format = ''.join('f' * self.n)
+		
+	def sample(self):
+		return np.random.normal(self.mu, self.sigma, self.n)
+		
+	def pack(self, act):
+		return struct.pack(self.pack_format, *act)
+		
 		
 class ObservationSpace(object):
 	def observe(self, raw_data):
@@ -52,8 +70,7 @@ class Unity3DEnvironment(object):
 		# TODO: Scene creation schemea
 		
 		# TODO: Define action space according to scene
-		# Now testing default size=6 action space
-		self.action_space = DiscreteActionSpace(3)
+		self.action_space = ContinuousActionSpace(2)
 		
 		# TODO: Define observation space according to scene
 		# Now testing default size=256*256*4 observation space
@@ -79,7 +96,7 @@ class Unity3DEnvironment(object):
 		NOTE: Currently only support int action type
 		TODO: More general action space
 		'''
-		sendData = struct.pack("I", act)
+		sendData = self.action_space.pack(act)
 		self.sock.send(sendData)
 		
 		raw_data = self.sock.recv(self.observation_space.size)
@@ -95,8 +112,9 @@ if __name__ == '__main__':
 	
 	env.reset()
 	
-	for t in xrange(10000):
+	for t in xrange(100000):
 		act = env.sample()
+		act = np.array([0.0, 1.0])
 		print ('Take action ', act)
 		env.step(act)
 		env.render()

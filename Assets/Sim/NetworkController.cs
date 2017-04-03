@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+public delegate void OnReceiveData(ref byte[] data);
+
 public class NetworkController : MonoBehaviour {
 
     private Thread m_ReceiveThread;
@@ -24,17 +26,24 @@ public class NetworkController : MonoBehaviour {
     [SerializeField]
     private ObservationProducer m_ObservationProducer;
     private byte[] m_Observation;
-    private Mutex m_ObservationMutex;
+    private Semaphore m_ObservationAvailable;
+    private int m_ObservationRequest = 0;
 
     [SerializeField]
-    private NetworkInputDecoder m_NetworkInputDecoder;
+    private SocketRawDataListener[] m_RawDataListeners;
+
+    public event OnReceiveData m_OnReceiveDataEvents;
 
     void Start()
     {
-        Debug.Assert(m_NetworkInputDecoder != null);
         Debug.Assert(m_ObservationProducer != null);
 
-        m_ObservationMutex = new Mutex();
+        foreach(SocketRawDataListener l in m_RawDataListeners)
+        {
+            m_OnReceiveDataEvents += l.OnReceiveRawData;
+        }
+
+        m_ObservationAvailable = new Semaphore(0, 1);
         if (Application.isEditor) { 
             Application.runInBackground = true;
         }
@@ -45,9 +54,11 @@ public class NetworkController : MonoBehaviour {
 
     void Update()
     {
-        m_ObservationMutex.WaitOne();
-        m_ObservationProducer.GetObservation(out m_Observation);
-        m_ObservationMutex.ReleaseMutex();
+        if (Interlocked.CompareExchange(ref m_ObservationRequest, 0, 1) == 1)
+        {
+            m_ObservationProducer.GetObservation(out m_Observation);
+            m_ObservationAvailable.Release(1);
+        }
     }
 
     void OnApplicationQuit()
@@ -74,14 +85,14 @@ public class NetworkController : MonoBehaviour {
                 m_ClientSocket.Receive(recvBuffer);
 
                 /* Decode input */
-                m_NetworkInputDecoder.Decode(ref recvBuffer);
+                m_OnReceiveDataEvents.Invoke(ref recvBuffer);
 
                 /* Respond with observation, reward, done, info */
-                m_ObservationMutex.WaitOne();
+                Interlocked.Increment(ref m_ObservationRequest);
+                m_ObservationAvailable.WaitOne();
                 m_ClientSocket.Send(m_Observation);
-                m_ObservationMutex.ReleaseMutex();
             }
-             m_ClientSocket.Close();
+            m_ClientSocket.Close();
             Debug.Log("Disconnected.");
         }
         m_TcpListener.Stop();
