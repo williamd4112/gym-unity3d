@@ -109,13 +109,16 @@ class Unity3DEnvironment(object):
 		
 if __name__ == '__main__':
 	env = Unity3DEnvironment()
-	
-	env.reset()
-	
-	for t in xrange(100000):
-		act = env.sample()
-		act = np.array([0.0, 1.0])
-		print ('Take action ', act)
-		env.step(act)
-		env.render()
+	for i in xrange(3):
+		env.sock.send('Hello')
+		pass
 	env.close()
+	#env.reset()
+	
+	#for t in xrange(100000):
+	#	act = env.sample()
+	#	act = np.array([0.0, 1.0])
+	#	print ('Take action ', act)
+	#	env.step(act)
+	#	env.render()
+	#env.close()

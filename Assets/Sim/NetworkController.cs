@@ -11,6 +11,8 @@ public delegate void OnReceiveData(ref byte[] data);
 
 public class NetworkController : MonoBehaviour {
 
+    public static GameObject instance;
+
     private Thread m_ReceiveThread;
     private TcpListener m_TcpListener;
     private Socket m_ClientSocket;
@@ -50,6 +52,17 @@ public class NetworkController : MonoBehaviour {
         m_ReceiveThread = new Thread(new ThreadStart(receiveData));
         m_ReceiveThread.IsBackground = true;
         m_ReceiveThread.Start();
+    }
+
+    void Awake()
+    {
+        if (instance != null && instance != transform.gameObject)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = transform.gameObject;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
