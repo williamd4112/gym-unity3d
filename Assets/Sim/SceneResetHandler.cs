@@ -15,16 +15,14 @@ public class SceneResetHandler : SocketRawDataListener {
     {
         if (data[0] == RESET_BYTE)
         {
-            m_IsReset = true;
+            Debug.Log("Reset scene");
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
     }
 
     void Update()
     {
-        if (m_IsReset)
-        {
-            Application.LoadLevel(Application.loadedLevel);
-        }
     }
 
 }

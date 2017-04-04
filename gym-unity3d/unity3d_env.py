@@ -4,6 +4,7 @@ import struct
 import random
 import numpy as np
 import cv2
+import binascii
 
 from operator import mul
 
@@ -22,12 +23,16 @@ def image_unity3d_to_cv2(data):
 class DiscreteActionSpace(object):
 	def __init__(self, num_action):
 		self.n = num_action
+		self.action_size_byte = 4
 		
 	def sample(self):
 		return random.randint(0, self.n)
 		
 	def pack(self, act):
 		return struct.pack("I", act)
+	
+	def reset(self, act):
+		return '\xff' * self.action_size_byte
 		
 class ContinuousActionSpace(object):
 	def __init__(self, num_dim):
@@ -35,12 +40,16 @@ class ContinuousActionSpace(object):
 		self.mu = 0.0
 		self.sigma = 1.0
 		self.pack_format = ''.join('f' * self.n)
+		self.action_size_byte = self.n * 4
 		
 	def sample(self):
 		return np.random.normal(self.mu, self.sigma, self.n)
 		
 	def pack(self, act):
 		return struct.pack(self.pack_format, *act)
+		
+	def reset(self):
+		return '\xff' * self.action_size_byte
 		
 		
 class ObservationSpace(object):
@@ -88,7 +97,8 @@ class Unity3DEnvironment(object):
 	
 	def reset(self):
 		# TODO: Reset the unity scene
-		pass
+		print binascii.hexlify(self.action_space.reset())
+		self.sock.send(self.action_space.reset())
 	
 	def step(self, act):
 		'''
@@ -109,8 +119,9 @@ class Unity3DEnvironment(object):
 		
 if __name__ == '__main__':
 	env = Unity3DEnvironment()
-	for i in xrange(3):
-		env.sock.send('Hello')
+	env.reset()
+	for i in xrange(100):
+		env.sock.send('ABCDabcd')
 		pass
 	env.close()
 	#env.reset()

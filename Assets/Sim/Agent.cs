@@ -7,25 +7,31 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-public class Agent : MonoBehaviour {
+public delegate void OnReceive(ref byte[] data);
 
-    private string AGENT_SERVER_TAG = "Server";
+public class Agent : MonoBehaviour {
 
     [SerializeField]
     private int m_AgentID = 0;
     [SerializeField]
     private int m_BufferSize = 5;
+    [SerializeField]
+    private SocketRawDataListener[] m_RawDataListeners;
 
-    private Thread m_ClientReceiveThread;
+    public event OnReceive m_OnReceiveEvents;
+
+    private bool m_IsShutdown = false;
+
+    private Thread m_MainThread;
 
 	// Use this for initialization
 	void Start () {
+        m_MainThread = System.Threading.Thread.CurrentThread;
+        foreach (SocketRawDataListener l in m_RawDataListeners)
+        {
+            m_OnReceiveEvents += l.OnReceiveRawData;
+        }
         StartCoroutine(SubscribeAgentServer());
-    }
-	
-	// Update is called once per frame
-	void Update () {
-
     }
 
     void OnClientConnect(AgentClient client)
@@ -33,22 +39,18 @@ public class Agent : MonoBehaviour {
         Debug.Log("Client " + client + " connected with agent " + m_AgentID);
         client.AllocateBuffer(m_BufferSize);
 
+        /* Make sure calling OnClientConnect in MainThread since Coroutine required */
+        Debug.Assert(System.Threading.Thread.CurrentThread.Equals(m_MainThread));
+
         /* Start receive loop */
-        startReceive(client);
+        StartCoroutine(ClientHandler(client));
     }
 
     void OnDestroy()
     {
         Debug.Log("Client diconnected with agent " + m_AgentID);
         AgentServer.Instance.UnsubscribeClient(m_AgentID, OnClientConnect);
-    }
-
-    void OnApplicationQuit()
-    {
-        if (m_ClientReceiveThread != null)
-        {
-            m_ClientReceiveThread.Abort();
-        }
+        m_IsShutdown = true;
     }
 
     IEnumerator SubscribeAgentServer()
@@ -59,8 +61,7 @@ public class Agent : MonoBehaviour {
         }
 
         /* Wait for AgentServer ready */
-        while (!AgentServer.Instance.Ready)
-        {
+        while (!AgentServer.Instance.Ready) {
             yield return new WaitForEndOfFrame();
         }
 
@@ -72,26 +73,38 @@ public class Agent : MonoBehaviour {
         yield return new WaitForEndOfFrame();
     }
 
-    void startReceive(AgentClient client)
+    IEnumerator ClientHandler(AgentClient client)
     {
-        bool receving = true;
-        client.DisconnectionEvents += (AgentClient c) => { receving = false; };
+        client.DisconnectionEvents += (AgentClient c) => { m_IsShutdown = true; };
 
-        m_ClientReceiveThread = new Thread(() =>
+        Debug.Log("Agent " + m_AgentID + " start receiveing.");
+        while (!m_IsShutdown)
         {
-            Debug.Log("Agent " + m_AgentID + " start receiveing.");
-            while (receving)
+            yield return new WaitUntil(() => {
+                try
+                {
+                    if (m_IsShutdown)
+                    {
+                        return true;
+                    }
+                    return (client.ClientSocket.Poll(1, SelectMode.SelectRead));
+                }
+                catch (SocketException)
+                {
+                    m_IsShutdown = true;
+                    return true;
+                }
+            });
+                
+            if (!m_IsShutdown)
             {
                 byte[] rawData = client.Receive();
-                if (rawData != null )
+                if (rawData != null)
                 {
-                    string res = System.Text.Encoding.UTF8.GetString(rawData);
-                    Debug.Log("Agent " + m_AgentID + " recieved : " + res);
+                    m_OnReceiveEvents.Invoke(ref rawData);
                 }
             }
-            Debug.Log("Agent " + m_AgentID + " stop receiveing.");
-        });
-        m_ClientReceiveThread.IsBackground = true;
-        m_ClientReceiveThread.Start();
+        }
+        Debug.Log("Agent " + m_AgentID + " stop receiveing.");
     }
 }

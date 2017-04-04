@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 using System;
 using System.Text;
@@ -54,6 +55,7 @@ public class AgentClient
         try
         {
             recv_byte = m_Socket.Receive(m_Buffer);
+            Debug.Log("Recv " + recv_byte + " bytes ");
             if (recv_byte == 0)
             {
                 throw new SocketException();
@@ -91,7 +93,7 @@ public class AgentClient
     }
 }
 
-public class AgentServer : MonoBehaviour {
+public class AgentServer : EventQueueMonoBehaviour {
 
     private static AgentServer instance = null;
     public static AgentServer Instance { get { return instance; } }
@@ -110,7 +112,6 @@ public class AgentServer : MonoBehaviour {
 
     private AgentClient[] m_Clients;
     private OnClientConnectEvent[] m_ClientConnectEvents;
-    private int m_NumActiveClient = 0;
     private Semaphore m_AvailableClientSlot;
 
     public void SubscribeClient(int id, OnClientConnectEvent e)
@@ -154,7 +155,8 @@ public class AgentServer : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start () {
+    override protected void Start () {
+        base.Start();
         if (Application.isEditor)
         {
             Application.runInBackground = true;
@@ -187,20 +189,22 @@ public class AgentServer : MonoBehaviour {
             Socket socket = m_TcpListener.AcceptSocket();
             Debug.Log("Connection from " + socket.RemoteEndPoint);
 
-            int empty_id = findEmptyClientSlot();
-            Debug.Log("Allocate slot " + empty_id);
+            AddEvent(() => {
+                int empty_id = findEmptyClientSlot();
+                Debug.Log("Allocate slot " + empty_id);
 
-            /* Should not be -1, since wait AvaialableClientSlot */
-            Debug.Assert(empty_id != -1);
+                /* Should not be -1, since wait AvaialableClientSlot */
+                Debug.Assert(empty_id != -1);
 
-            /* Set new client in empty slot */
-            m_Clients[empty_id] = new AgentClient(empty_id, socket);
-            m_Clients[empty_id].DisconnectionEvents += OnClientDisconnect;
-            if (m_ClientConnectEvents != null)
-            {
-                m_ClientConnectEvents[empty_id].Invoke(m_Clients[empty_id]);
-            }
-            Debug.Log("Client " + socket.RemoteEndPoint + " connected. [Agent " +  empty_id + "]");
+                /* Set new client in empty slot */
+                m_Clients[empty_id] = new AgentClient(empty_id, socket);
+                m_Clients[empty_id].DisconnectionEvents += OnClientDisconnect;
+                if (m_ClientConnectEvents != null)
+                {
+                    m_ClientConnectEvents[empty_id].Invoke(m_Clients[empty_id]);
+                }
+                Debug.Log("Client " + socket.RemoteEndPoint + " connected. [Agent " + empty_id + "]");
+            });
         }
     }
 

@@ -1,6 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections;
+
 using System;
+using System.Text;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 public class Common {
 
@@ -12,5 +17,14 @@ public class Common {
             floatArr[i] = BitConverter.ToSingle(array, i * 4);
         }
         return floatArr;
+    }
+
+    public static bool IsConnected(Socket socket)
+    {
+        try
+        {
+            return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+        }
+        catch (SocketException) { return false; }
     }
 }
