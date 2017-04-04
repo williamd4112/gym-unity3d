@@ -21,6 +21,15 @@ def image_unity3d_to_cv2(data):
 	data = image_rgba32_to_bgr(data)
 	data = np.flip(data, axis=0)
 	return data
+	
+def recvall(sock, count):
+    buf = b''
+    while count:
+        newbuf = sock.recv(count)
+        if not newbuf: return None
+        buf += newbuf
+        count -= len(newbuf)
+    return buf
 
 class DiscreteActionSpace(object):
 	def __init__(self, num_action):
@@ -68,6 +77,14 @@ class VisionObservationSpace(ObservationSpace):
 		observation = image_unity3d_to_cv2(observation)
 		return observation
 	
+class ScalarRewardSpace(object):
+	def __init__(self):
+		self.size = 4
+
+	def unpack(self, raw_data):
+		reward = np.fromstring(raw_data, np.float32)
+		return reward[0]
+
 class Unity3DEnvironment(object):
 	def __init__(self, server_address=('127.0.0.1', 8888), scene='test'):
 		# Create a TCP/IP socket
@@ -86,7 +103,13 @@ class Unity3DEnvironment(object):
 		# Now testing default size=256*256*4 observation space
 		self.observation_space = VisionObservationSpace((256, 256, 4))
 		
+		# TODO: Define reward space according to scene
+		self.reward_space = ScalarRewardSpace()
+		
+		self.done_size = 1
+		
 		self.last_observation = None
+		self.last_reward = None
 	
 	def close(self):
 		self.sock.close()
@@ -111,21 +134,28 @@ class Unity3DEnvironment(object):
 		self.sock.send(sendData)
 		
 		if not non_block:
-			raw_data = self.sock.recv(self.observation_space.size)
-			self.last_observation = self.observation_space.observe(raw_data)
-			return self.last_observation
+			raw_data = recvall(self.sock, self.observation_space.size + self.reward_space.size + self.done_size)
+			self.last_observation = self.observation_space.observe(raw_data[:self.observation_space.size])
+			self.last_reward = self.reward_space.unpack(raw_data[self.observation_space.size:self.observation_space.size + self.reward_space.size])
+			done = bool(np.fromstring(raw_data[((self.observation_space.size + self.reward_space.size))], np.uint8)[0])
+		
+			return self.last_observation, self.last_reward, done
 	
 	def sample(self):
 		return self.action_space.sample()
 		
 if __name__ == '__main__':
 	env = Unity3DEnvironment()
-	env.reset()
 	
-	for t in xrange(100000):
-		act = env.sample()
-		act = np.array([1.0, 1.0])
-		#print ('Take action ', act)
-		env.step(act, non_block=True)
-		env.render()
+	for episode in xrange(10):
+		env.reset()
+		for t in xrange(10000):
+			act = env.sample()
+			obs, reward, done = env.step(act, non_block=False)
+			
+			print (act, reward, done)
+			
+			env.render()
+			if done:
+				break
 	env.close()

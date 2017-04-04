@@ -21,6 +21,8 @@ public class RGBDDataFetcher : PostEffectsBase {
 
     [SerializeField]
     private bool m_IsRenderToScreen = true;
+    [SerializeField]
+    private bool m_UseDepth = false;
 
     public int GetDepthTextureSize()
     {
@@ -63,7 +65,7 @@ public class RGBDDataFetcher : PostEffectsBase {
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        if (m_DepthMaterial)
+        if (m_DepthMaterial && m_UseDepth)
         {
             Graphics.Blit(source, m_DepthTexture, m_DepthMaterial);
         }

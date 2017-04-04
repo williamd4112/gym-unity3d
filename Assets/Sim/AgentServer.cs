@@ -62,13 +62,12 @@ public class AgentClient
         }
         catch (SocketException e)
         {
-            m_Active = false;
-            DisconnectionEvents.Invoke(this);
+            handleSockException(e);
         }
         return (recv_byte == 0) ? null : m_Buffer;
     }
 
-    public void Send(ref byte[] buffer)
+    public void Send(byte[] buffer)
     {
         try
         {
@@ -76,8 +75,7 @@ public class AgentClient
         }
         catch (SocketException e)
         {
-            m_Active = false;
-            DisconnectionEvents.Invoke(this);
+            handleSockException(e);
         }
     }
 
@@ -89,6 +87,16 @@ public class AgentClient
     public override string ToString()
     {
         return m_Socket.RemoteEndPoint.ToString();
+    }
+
+    private void handleSockException(SocketException e)
+    {
+        bool old_active = m_Active;
+        m_Active = false;
+        if (old_active && !m_Active)
+        {
+            DisconnectionEvents.Invoke(this);
+        }
     }
 }
 

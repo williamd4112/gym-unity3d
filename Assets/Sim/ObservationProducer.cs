@@ -6,4 +6,6 @@ using System;
 abstract public class ObservationProducer : MonoBehaviour {
 
     abstract public void GetObservation(out byte[] buffer);
+    abstract public byte[] GetObservation();
+    abstract public int GetObservationSize();
 }

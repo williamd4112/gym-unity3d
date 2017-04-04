@@ -12,10 +12,21 @@ public class RGBObservationProducer : ObservationProducer {
 
     private RGBDDataFetcher m_RGBDataFetcher;
 
+    public override byte[] GetObservation()
+    {
+        m_RGBDataFetcher.GetRGBObservation(ref m_RGBBuffer);
+        return m_RGBBuffer;
+    }
+
     public override void GetObservation(out byte[] buffer)
     {
         buffer = m_RGBBuffer;
         m_RGBDataFetcher.GetRGBObservation(ref buffer);
+    }
+
+    public override int GetObservationSize()
+    {
+        return m_RGBDataFetcher.GetRGBTextureSize();
     }
 
     void Start ()
