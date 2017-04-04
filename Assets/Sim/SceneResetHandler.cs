@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneResetHandler : SocketRawDataListener {
 
-    private const byte RESET_BYTE = 0xff;
+    private const int RESET_INT = 0xff;
 
     [SerializeField]
     private bool m_IsReset = false;
 
     public override void OnReceiveRawData(ref byte[] data)
     {
-        if (data[0] == RESET_BYTE)
+        if (BitConverter.ToInt32(data, 0) == RESET_INT)
         {
             Debug.Log("Reset scene");
             Scene scene = SceneManager.GetActiveScene();

@@ -9,6 +9,8 @@ import binascii
 from operator import mul
 
 SIZE_OF_UNITY_PIXEL_CHANNEL = 4
+SCENE_OP_CODE_ACTION = 0x00
+SCENE_OP_CODE_RESET = 0xff
 
 def image_rgba32_to_bgr(data):
 	data = (data[:,:,:3] * 255.0).astype(np.uint8)
@@ -23,33 +25,32 @@ def image_unity3d_to_cv2(data):
 class DiscreteActionSpace(object):
 	def __init__(self, num_action):
 		self.n = num_action
-		self.action_size_byte = 4
 		
 	def sample(self):
 		return random.randint(0, self.n)
 		
 	def pack(self, act):
-		return struct.pack("I", act)
+		return struct.pack("II", SCENE_OP_CODE_ACTION, act)
 	
 	def reset(self, act):
-		return '\xff' * self.action_size_byte
+		return struct.pack("II", SCENE_OP_CODE_RESET, 0)
 		
 class ContinuousActionSpace(object):
 	def __init__(self, num_dim):
 		self.n = num_dim
 		self.mu = 0.0
 		self.sigma = 1.0
-		self.pack_format = ''.join('f' * self.n)
-		self.action_size_byte = self.n * 4
+		self.pack_format = 'I' + ''.join('f' * self.n)
 		
 	def sample(self):
 		return np.random.normal(self.mu, self.sigma, self.n)
 		
 	def pack(self, act):
-		return struct.pack(self.pack_format, *act)
+		return struct.pack(self.pack_format, SCENE_OP_CODE_ACTION, *act)
 		
 	def reset(self):
-		return '\xff' * self.action_size_byte
+		act = np.zeros(self.n, dtype=np.float32)
+		return struct.pack(self.pack_format, SCENE_OP_CODE_RESET, *act)
 		
 		
 class ObservationSpace(object):
@@ -97,22 +98,22 @@ class Unity3DEnvironment(object):
 	
 	def reset(self):
 		# TODO: Reset the unity scene
-		print binascii.hexlify(self.action_space.reset())
 		self.sock.send(self.action_space.reset())
 	
-	def step(self, act):
+	def step(self, act, non_block=False):
 		'''
 		param act: action
 		NOTE: Currently only support int action type
 		TODO: More general action space
 		'''
 		sendData = self.action_space.pack(act)
+	
 		self.sock.send(sendData)
 		
-		raw_data = self.sock.recv(self.observation_space.size)
-		self.last_observation = self.observation_space.observe(raw_data)
-		
-		return self.last_observation
+		if not non_block:
+			raw_data = self.sock.recv(self.observation_space.size)
+			self.last_observation = self.observation_space.observe(raw_data)
+			return self.last_observation
 	
 	def sample(self):
 		return self.action_space.sample()
@@ -120,16 +121,11 @@ class Unity3DEnvironment(object):
 if __name__ == '__main__':
 	env = Unity3DEnvironment()
 	env.reset()
-	for i in xrange(100):
-		env.sock.send('ABCDabcd')
-		pass
-	env.close()
-	#env.reset()
 	
-	#for t in xrange(100000):
-	#	act = env.sample()
-	#	act = np.array([0.0, 1.0])
-	#	print ('Take action ', act)
-	#	env.step(act)
-	#	env.render()
-	#env.close()
+	for t in xrange(100000):
+		act = env.sample()
+		act = np.array([1.0, 1.0])
+		#print ('Take action ', act)
+		env.step(act, non_block=True)
+		env.render()
+	env.close()

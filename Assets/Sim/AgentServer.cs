@@ -55,7 +55,6 @@ public class AgentClient
         try
         {
             recv_byte = m_Socket.Receive(m_Buffer);
-            Debug.Log("Recv " + recv_byte + " bytes ");
             if (recv_byte == 0)
             {
                 throw new SocketException();

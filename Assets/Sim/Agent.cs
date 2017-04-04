@@ -14,7 +14,7 @@ public class Agent : MonoBehaviour {
     [SerializeField]
     private int m_AgentID = 0;
     [SerializeField]
-    private int m_BufferSize = 5;
+    private int m_BufferSize = 12;
     [SerializeField]
     private SocketRawDataListener[] m_RawDataListeners;
 
@@ -80,6 +80,7 @@ public class Agent : MonoBehaviour {
         Debug.Log("Agent " + m_AgentID + " start receiveing.");
         while (!m_IsShutdown)
         {
+            /* Wait for socket ready */
             yield return new WaitUntil(() => {
                 try
                 {
@@ -98,12 +99,16 @@ public class Agent : MonoBehaviour {
                 
             if (!m_IsShutdown)
             {
+                /* Receive data from client */
                 byte[] rawData = client.Receive();
                 if (rawData != null)
                 {
                     m_OnReceiveEvents.Invoke(ref rawData);
                 }
             }
+
+            /* Wait for next frame */
+            yield return new WaitForEndOfFrame();
         }
         Debug.Log("Agent " + m_AgentID + " stop receiveing.");
     }

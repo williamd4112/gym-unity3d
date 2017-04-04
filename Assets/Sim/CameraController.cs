@@ -12,7 +12,7 @@ public class CameraController : SocketRawDataListener {
 
     public override void OnReceiveRawData(ref byte[] data)
     {
-        float[] velocity = Common.ConvertByteToFloat(data);
+        float[] velocity = Common.ConvertByteToFloat(data, 0);
         m_Horizontal = velocity[0];
         m_Vertical = velocity[1];
         Debug.Log(velocity[0] + "," + velocity[1]);
