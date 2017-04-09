@@ -113,7 +113,7 @@ public class AgentServer : EventQueueMonoBehaviour {
     private TcpListener m_TcpListener;
 
     [SerializeField]
-    private int m_Port = 8888;
+    private int m_Port = 821;
     [SerializeField]
     private int m_MaxClients = 1;
 
@@ -160,6 +160,7 @@ public class AgentServer : EventQueueMonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+		m_Port = Convert.ToInt32(GetArg ("port")) ;
     }
 
     override protected void Start () {
@@ -195,7 +196,7 @@ public class AgentServer : EventQueueMonoBehaviour {
             Debug.Log("Listening connections...");
             Socket socket = m_TcpListener.AcceptSocket();
             Debug.Log("Connection from " + socket.RemoteEndPoint);
-
+			Debug.Log ("Port :" + m_Port);
             AddEvent(() => {
                 int empty_id = findEmptyClientSlot();
                 Debug.Log("Allocate slot " + empty_id);
@@ -229,7 +230,21 @@ public class AgentServer : EventQueueMonoBehaviour {
 
     void OnClientDisconnect(AgentClient client)
     {
-        Debug.Log("Client " + client.ClientSocket.RemoteEndPoint + " disconnected.");
+        //Debug.Log("Client " + client.ClientSocket.RemoteEndPoint + " disconnected.");
+		Debug.Log("OnClientDisconnect");
         m_AvailableClientSlot.Release();
     }
+	private static string GetArg(string name)
+	{
+		var args = System.Environment.GetCommandLineArgs();
+		for (int i = 0; i < args.Length; i++)
+		{
+			if (args[i] == name && args.Length > i + 1)
+			{
+				return args[i + 1];
+			}
+		}
+		return null;
+	}
+
 }
