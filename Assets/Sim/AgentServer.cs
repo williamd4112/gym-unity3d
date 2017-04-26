@@ -113,7 +113,7 @@ public class AgentServer : EventQueueMonoBehaviour {
     private TcpListener m_TcpListener;
 
     [SerializeField]
-    private int m_Port = 821;
+    private int m_Port = 888;
     [SerializeField]
     private int m_MaxClients = 1;
 
@@ -160,7 +160,11 @@ public class AgentServer : EventQueueMonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-		m_Port = Convert.ToInt32(GetArg ("port")) ;
+		if (GetArg ("port") == null) {
+			m_Port = 888 ;
+		} else {
+			m_Port = Convert.ToInt32 (GetArg ("port"));
+		}
     }
 
     override protected void Start () {
@@ -186,7 +190,7 @@ public class AgentServer : EventQueueMonoBehaviour {
 
     void listenClient()
     {
-        m_TcpListener = new TcpListener(IPAddress.Any, m_Port);
+		m_TcpListener = new TcpListener(IPAddress.Any, m_Port);
         m_TcpListener.Start();
 
         while (true)
