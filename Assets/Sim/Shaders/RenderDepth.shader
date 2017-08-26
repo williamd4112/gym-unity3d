@@ -1,4 +1,6 @@
-﻿Shader "Custom/RenderDepth"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/RenderDepth"
 {
 	Properties
 	{
@@ -36,7 +38,7 @@
 		output vert(input i)
 		{
 			output o;
-			o.pos = mul(UNITY_MATRIX_MVP, i.pos);
+			o.pos = UnityObjectToClipPos(i.pos);
 			o.uv = MultiplyUV(UNITY_MATRIX_TEXTURE0, i.uv);
 			
 #if UNITY_UV_STARTS_AT_TOP

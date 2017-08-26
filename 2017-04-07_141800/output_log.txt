@@ -1,0 +1,269 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 (ID=0x1c20)
+    Vendor:   NVIDIA
+    VRAM:     3035 MB
+    Driver:   21.21.13.7654
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.024 seconds
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Managed\System.dll (this message is harmless)
+UnloadTime: 3.280229 ms
+Connect with AgentServer (True)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Agent 0 subscribe AgentServer for client 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Listening connections...
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Connection from 127.0.0.1:50433
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Allocate slot 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 127.0.0.1:50433 connected with agent 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Agent 0 start receiveing.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 127.0.0.1:50433 connected. [Agent 0]
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Reset scene
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+Client disconnected with agent 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+UnloadTime: 1.503544 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 1648.
+Total: 0.451829 ms (FindLiveObjects: 0.102837 ms CreateObjectMapping: 0.037196 ms MarkObjects: 0.305960 ms  DeleteObjects: 0.005105 ms)
+
+Connect with AgentServer (True)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 127.0.0.1:50433 connected with agent 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Agent 0 start receiveing.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Agent 0 subscribe AgentServer for client 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+d3d11: failed to create buffer (target 0x2 mode 2 size 65536) [0x8007000E]
+d3d11: attempt to lock null buffer
+Crash!!!
+SymInit: Symbol-SearchPath: '.;C:\Users\williamd\Documents\robot-sim;C:\Users\williamd\Documents\robot-sim;C:\Windows;C:\Windows\system32;SRV*C:\websymbols*http://msdl.microsoft.com/download/symbols;', symOptions: 530, UserName: 'williamd'
+OS-Version: 10.0.14393 () 0x300-0x1
+C:\Users\williamd\Documents\robot-sim\Scene_Test000.exe:Scene_Test000.exe (01390000), size: 18976768 (result: 0), SymType: '-exported-', PDB: 'C:\Users\williamd\Documents\robot-sim\Scene_Test000.exe', fileVersion: 5.6.0.31247
+C:\Windows\SYSTEM32\ntdll.dll:ntdll.dll (76EE0000), size: 1585152 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\ntdll.dll', fileVersion: 10.0.14393.479
+C:\Windows\System32\KERNEL32.DLL:KERNEL32.DLL (76DD0000), size: 917504 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\KERNEL32.DLL', fileVersion: 10.0.14393.0
+C:\Windows\System32\KERNELBASE.dll:KERNELBASE.dll (76B20000), size: 1708032 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\KERNELBASE.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\USER32.dll:USER32.dll (74290000), size: 1437696 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\USER32.dll', fileVersion: 10.0.14393.576
+C:\Windows\System32\win32u.dll:win32u.dll (749C0000), size: 86016 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\win32u.dll', fileVersion: 10.0.14393.51
+C:\Windows\SYSTEM32\HID.DLL:HID.DLL (55880000), size: 40960 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\HID.DLL', fileVersion: 10.0.14393.0
+C:\Windows\System32\GDI32.dll:GDI32.dll (76EB0000), size: 176128 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\GDI32.dll', fileVersion: 10.0.14393.206
+C:\Windows\System32\gdi32full.dll:gdi32full.dll (743F0000), size: 1421312 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\gdi32full.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\msvcrt.dll:msvcrt.dll (74AC0000), size: 778240 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\msvcrt.dll', fileVersion: 7.0.14393.0
+C:\Windows\System32\ole32.dll:ole32.dll (741A0000), size: 958464 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\ole32.dll', fileVersion: 10.0.14393.576
+C:\Windows\System32\combase.dll:combase.dll (73F40000), size: 2166784 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\combase.dll', fileVersion: 10.0.14393.576
+C:\Windows\System32\ucrtbase.dll:ucrtbase.dll (766D0000), size: 917504 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\ucrtbase.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\VERSION.dll:VERSION.dll (72E60000), size: 32768 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\VERSION.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\RPCRT4.dll:RPCRT4.dll (74DF0000), size: 790528 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\RPCRT4.dll', fileVersion: 10.0.14393.82
+C:\Windows\System32\SspiCli.dll:SspiCli.dll (739A0000), size: 122880 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\SspiCli.dll', fileVersion: 10.0.14393.576
+C:\Windows\System32\CRYPTBASE.dll:CRYPTBASE.dll (73990000), size: 40960 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\CRYPTBASE.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\bcryptPrimitives.dll:bcryptPrimitives.dll (749E0000), size: 368640 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\bcryptPrimitives.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\sechost.dll:sechost.dll (751B0000), size: 266240 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\sechost.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\SHLWAPI.dll:SHLWAPI.dll (74FC0000), size: 286720 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\SHLWAPI.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\ADVAPI32.dll:ADVAPI32.dll (74F30000), size: 487424 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\ADVAPI32.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\SHELL32.dll:SHELL32.dll (752F0000), size: 20811776 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\SHELL32.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\cfgmgr32.dll:cfgmgr32.dll (74160000), size: 221184 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\cfgmgr32.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\windows.storage.dll:windows.storage.dll (739D0000), size: 5693440 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\windows.storage.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\powrprof.dll:powrprof.dll (76D80000), size: 282624 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\powrprof.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\kernel.appcore.dll:kernel.appcore.dll (76CD0000), size: 53248 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\kernel.appcore.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\shcore.dll:shcore.dll (76CE0000), size: 557056 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\shcore.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\profapi.dll:profapi.dll (74ED0000), size: 61440 (result: 0), SymType: '-nosymbols-', PDB: 'C:\Windows\System32\profapi.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\WS2_32.dll:WS2_32.dll (769B0000), size: 405504 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\WS2_32.dll', fileVersion: 10.0.14393.206
+C:\Windows\System32\OLEAUT32.dll:OLEAUT32.dll (74D50000), size: 606208 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\OLEAUT32.dll', fileVersion: 10.0.14393.447
+C:\Windows\SYSTEM32\OPENGL32.dll:OPENGL32.dll (550F0000), size: 917504 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\OPENGL32.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\msvcp_win.dll:msvcp_win.dll (74A40000), size: 503808 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\msvcp_win.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\WINMM.dll:WINMM.dll (72FD0000), size: 147456 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\WINMM.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\IMM32.dll:IMM32.dll (74D20000), size: 151552 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\IMM32.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\IPHLPAPI.DLL:IPHLPAPI.DLL (73900000), size: 192512 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\IPHLPAPI.DLL', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\WINHTTP.dll:WINHTTP.dll (73470000), size: 655360 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\WINHTTP.dll', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\DNSAPI.dll:DNSAPI.dll (704B0000), size: 512000 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\DNSAPI.dll', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\WINMMBASE.dll:WINMMBASE.dll (72E70000), size: 143360 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\WINMMBASE.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\NSI.dll:NSI.dll (74FB0000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\NSI.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\GLU32.dll:GLU32.dll (550C0000), size: 151552 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\GLU32.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\DDRAW.dll:DDRAW.dll (54FD0000), size: 970752 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\DDRAW.dll', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\DCIMAN32.dll:DCIMAN32.dll (55570000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\DCIMAN32.dll', fileVersion: 10.0.14393.0
+C:\Windows\system32\uxtheme.dll:uxtheme.dll (725F0000), size: 479232 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\uxtheme.dll', fileVersion: 10.0.14393.0
+C:\Program Files\Nahimic\Nahimic2\UserInterface\Nahimic2DevProps.dll:Nahimic2DevProps.dll (6D440000), size: 188416 (result: 0), SymType: '-exported-', PDB: 'C:\Program Files\Nahimic\Nahimic2\UserInterface\Nahimic2DevProps.dll'
+C:\Program Files\Nahimic\Nahimic2\UserInterface\Nahimic2OSD.dll:Nahimic2OSD.dll (6D470000), size: 270336 (result: 0), SymType: '-exported-', PDB: 'C:\Program Files\Nahimic\Nahimic2\UserInterface\Nahimic2OSD.dll'
+C:\Windows\System32\clbcatq.dll:clbcatq.dll (767B0000), size: 540672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\clbcatq.dll', fileVersion: 2001.12.10941.16384
+C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Mono\mono.dll:mono.dll (10000000), size: 2297856 (result: 0), SymType: '-exported-', PDB: 'C:\Users\williamd\Documents\robot-sim\Scene_Test000_Data\Mono\mono.dll', fileVersion: 1.0.0.1
+C:\Windows\System32\PSAPI.DLL:PSAPI.DLL (739C0000), size: 24576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\PSAPI.DLL', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\MSWSOCK.dll:MSWSOCK.dll (73000000), size: 319488 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\MSWSOCK.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\MMDevApi.dll:MMDevApi.dll (6D610000), size: 360448 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\MMDevApi.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\DEVOBJ.dll:DEVOBJ.dll (70320000), size: 139264 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\DEVOBJ.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\PROPSYS.dll:PROPSYS.dll (71110000), size: 1372160 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\PROPSYS.dll', fileVersion: 7.0.14393.0
+C:\Windows\SYSTEM32\AUDIOSES.DLL:AUDIOSES.DLL (6D590000), size: 503808 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\AUDIOSES.DLL', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\wintypes.dll:wintypes.dll (6D4C0000), size: 847872 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\wintypes.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\MSCTF.dll:MSCTF.dll (74B80000), size: 1265664 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\MSCTF.dll', fileVersion: 10.0.14393.953
+C:\Windows\system32\dwmapi.dll:dwmapi.dll (725D0000), size: 126976 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\dwmapi.dll', fileVersion: 10.0.14393.206
+C:\Windows\SYSTEM32\d3d11.dll:d3d11.dll (6E1B0000), size: 2293760 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\d3d11.dll', fileVersion: 10.0.14393.953
+C:\Windows\SYSTEM32\dxgi.dll:dxgi.dll (6E820000), size: 536576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\dxgi.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\DriverStore\FileRepository\nvmiwu.inf_amd64_01856dcc82b1034f\nvwgf2um.dll:nvwgf2um.dll (06770000), size: 20688896 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\DriverStore\FileRepository\nvmiwu.inf_amd64_01856dcc82b1034f\nvwgf2um.dll', fileVersion: 21.21.13.7654
+C:\Windows\SYSTEM32\bcrypt.dll:bcrypt.dll (733D0000), size: 110592 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\bcrypt.dll', fileVersion: 10.0.14393.576
+C:\Windows\system32\nvspcap.dll:nvspcap.dll (69720000), size: 1380352 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\nvspcap.dll', fileVersion: 2.11.4.125
+C:\Windows\System32\SETUPAPI.dll:SETUPAPI.dll (745B0000), size: 4239360 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\SETUPAPI.dll', fileVersion: 10.0.14393.0
+C:\Windows\system32\nvapi.dll:nvapi.dll (69390000), size: 3694592 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\nvapi.dll', fileVersion: 21.21.13.7654
+C:\Windows\System32\WINTRUST.dll:WINTRUST.dll (74EE0000), size: 278528 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\WINTRUST.dll', fileVersion: 10.0.14393.953
+C:\Windows\System32\MSASN1.dll:MSASN1.dll (76D70000), size: 57344 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\MSASN1.dll', fileVersion: 10.0.14393.0
+C:\Windows\System32\CRYPT32.dll:CRYPT32.dll (75030000), size: 1560576 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\System32\CRYPT32.dll', fileVersion: 10.0.14393.351
+C:\Windows\system32\wbem\wbemprox.dll:wbemprox.dll (70270000), size: 53248 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\wbem\wbemprox.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\wbemcomn.dll:wbemcomn.dll (70280000), size: 421888 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\wbemcomn.dll', fileVersion: 10.0.14393.0
+C:\Windows\system32\wbem\wbemsvc.dll:wbemsvc.dll (70260000), size: 65536 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\wbem\wbemsvc.dll', fileVersion: 10.0.14393.0
+C:\Windows\system32\wbem\fastprox.dll:fastprox.dll (70190000), size: 794624 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\system32\wbem\fastprox.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\wdmaud.drv:wdmaud.drv (54F90000), size: 233472 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\wdmaud.drv', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\ksuser.dll:ksuser.dll (6D8F0000), size: 28672 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\ksuser.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\AVRT.dll:AVRT.dll (6D360000), size: 36864 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\AVRT.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\msacm32.drv:msacm32.drv (54F80000), size: 40960 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\msacm32.drv', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\MSACM32.dll:MSACM32.dll (6D400000), size: 98304 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\MSACM32.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\midimap.dll:midimap.dll (54F70000), size: 32768 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\midimap.dll', fileVersion: 10.0.14393.0
+C:\Windows\SYSTEM32\dbghelp.dll:dbghelp.dll (3C960000), size: 1331200 (result: 0), SymType: '-exported-', PDB: 'C:\Windows\SYSTEM32\dbghelp.dll', fileVersion: 10.0.14321.1024
+
+========== OUTPUTING STACK TRACE ==================
+
+0x6E30C7BA (d3d11) CreateDirect3D11SurfaceFromDXGISurface
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01632C19)
+0x01632C19 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0171A05E)
+0x0171A05E (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 017229D8)
+0x017229D8 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 016129BD)
+0x016129BD (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0166E5FD)
+0x0166E5FD (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01612127)
+0x01612127 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01614738)
+0x01614738 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0157E665)
+0x0157E665 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01582EC0)
+0x01582EC0 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01610FB1)
+0x01610FB1 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0167A44F)
+0x0167A44F (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01594BA8)
+0x01594BA8 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01594CCD)
+0x01594CCD (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0153A76C)
+0x0153A76C (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0153ABAB)
+0x0153ABAB (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0153D20C)
+0x0153D20C (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0153D4BA)
+0x0153D4BA (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0153D5E8)
+0x0153D5E8 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01A42539)
+0x01A42539 (Scene_Test000) 
+0x05700574 (Mono JIT Code) (wrapper managed-to-native) UnityEngine.Camera:Render ()
+0x05700507 (Mono JIT Code) RGBDDataFetcher:Update ()
+0x056F9261 (Mono JIT Code) (wrapper runtime-invoke) object:runtime_invoke_void__this__ (object,intptr,intptr,intptr)
+0x100F17E6 (mono) mono_set_defaults
+0x1005D865 (mono) mono_runtime_invoke
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 018E20E0)
+0x018E20E0 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 018DEC42)
+0x018DEC42 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01A85A6E)
+0x01A85A6E (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01A87CC1)
+0x01A87CC1 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01A87CD7)
+0x01A87CD7 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 017BA2F1)
+0x017BA2F1 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 0140746E)
+0x0140746E (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01BD3E58)
+0x01BD3E58 (Scene_Test000) 
+  ERROR: SymGetSymFromAddr64, GetLastError: '企圖存取不正確的位址。
+' (Address: 01C11AD4)
+0x01C11AD4 (Scene_Test000) 
+0x76DE62C4 (KERNEL32) BaseThreadInitThunk
+0x76F40FD9 (ntdll) RtlSubscribeWnfStateChangeNotification
+0x76F40FA4 (ntdll) RtlSubscribeWnfStateChangeNotification
+
+========== END OF STACKTRACE ===========
+
+**** Crash! ****

@@ -2,46 +2,76 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class VehicleController : MonoBehaviour
+namespace Kobuki
 {
-    [SerializeField]
-    private AxleInfo axleInfo; // the information about each individual axle
-    [SerializeField]
-    private float maxMotorTorque; // maximum torque the motor can apply to wheel
-
-    public void FixedUpdate()
+    public class VehicleController : MonoBehaviour
     {
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
-        float leftMotor = motor;
-        float rightMotor = motor;
+        [SerializeField]
+        private AxleInfo axleInfo; // the information about each individual axle
+        [SerializeField]
+        private float maxMotorTorque; // maximum torque the motor can apply to wheel
 
-        if (axleInfo.steering)
+        [SerializeField]
+        private float m_Motor;
+        [SerializeField]
+        private float m_Steering;
+        [SerializeField]
+        private bool m_HumanControl = false;
+
+        public float GetMaxTorque()
         {
-            float steering = Input.GetAxis("Horizontal");
+            return maxMotorTorque;
+        }
 
-            if (steering > 0)
-            {
-                rightMotor = rightMotor * 0.2f + 0.8f * (1f - steering);
-            }
-            else if (steering < 0)
-            {
-                leftMotor = leftMotor * 0.2f + 0.8f * (1f - Mathf.Abs(steering));
+        public void SetMotor(float motor)
+        {
+            m_Motor = motor;
+        }
+
+        public void SetSteering(float steer)
+        {
+            m_Steering = steer;
+        }
+
+        void Update()
+        {
+            if (m_HumanControl) {
+                m_Motor = maxMotorTorque * Input.GetAxis("Vertical");
+                m_Steering = Input.GetAxis("Horizontal");
             }
         }
 
-        if (axleInfo.motor)
+        public void FixedUpdate()
         {
-            axleInfo.leftWheel.motorTorque = leftMotor;
-            axleInfo.rightWheel.motorTorque = rightMotor;
+            float leftMotor = m_Motor;
+            float rightMotor = m_Motor;
+
+            if (axleInfo.steering)
+            {
+                if (m_Steering > 0)
+                {
+                    rightMotor = rightMotor * 0.2f + 0.8f * (1f - m_Steering);
+                }
+                else if (m_Steering < 0)
+                {
+                    leftMotor = leftMotor * 0.2f + 0.8f * (1f - Mathf.Abs(m_Steering));
+                }
+            }
+
+            if (axleInfo.motor)
+            {
+                axleInfo.leftWheel.motorTorque = leftMotor;
+                axleInfo.rightWheel.motorTorque = rightMotor;
+            }
         }
     }
-}
 
-[System.Serializable]
-public class AxleInfo
-{
-    public WheelCollider leftWheel;
-    public WheelCollider rightWheel;
-    public bool motor; // is this wheel attached to motor?
-    public bool steering; // does this wheel apply steer angle?
+    [System.Serializable]
+    public class AxleInfo
+    {
+        public WheelCollider leftWheel;
+        public WheelCollider rightWheel;
+        public bool motor; // is this wheel attached to motor?
+        public bool steering; // does this wheel apply steer angle?
+    }
 }

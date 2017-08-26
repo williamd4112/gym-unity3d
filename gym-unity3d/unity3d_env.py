@@ -5,12 +5,14 @@ import random
 import numpy as np
 import cv2
 import binascii
+import functools
 
 from operator import mul
 
 SIZE_OF_UNITY_PIXEL_CHANNEL = 4
-SCENE_OP_CODE_ACTION = 0x00
+SCENE_OP_CODE_ACTION = 0x01ff
 SCENE_OP_CODE_RESET = 0xff
+SCENE_OP_CODE_NOOP = 0x00
 
 def image_rgba32_to_bgr(data):
 	data = (data[:,:,:3] * 255.0).astype(np.uint8)
@@ -60,6 +62,10 @@ class ContinuousActionSpace(object):
 	def reset(self):
 		act = np.zeros(self.n, dtype=np.float32)
 		return struct.pack(self.pack_format, SCENE_OP_CODE_RESET, *act)
+	
+	def noop(self):
+		act = np.zeros(self.n, dtype=np.float32)
+		return struct.pack(self.pack_format, SCENE_OP_CODE_NOOP, *act)
 		
 		
 class ObservationSpace(object):
@@ -69,7 +75,7 @@ class ObservationSpace(object):
 class VisionObservationSpace(ObservationSpace):
 	def __init__(self, shape):
 		self.shape = shape
-		self.size = reduce(mul, shape) * SIZE_OF_UNITY_PIXEL_CHANNEL
+		self.size = functools.reduce(mul, shape) * SIZE_OF_UNITY_PIXEL_CHANNEL
 		
 	def observe(self, raw_data):
 		observation = np.fromstring(raw_data, np.float32)
@@ -122,7 +128,10 @@ class Unity3DEnvironment(object):
 	def reset(self):
 		# TODO: Reset the unity scene
 		self.sock.send(self.action_space.reset())
-	
+		self.sock.send(self.action_space.noop())
+		obs, reward, done = self._recv_next_state()
+		return None
+
 	def step(self, act, non_block=False):
 		'''
 		param act: action
@@ -134,28 +143,33 @@ class Unity3DEnvironment(object):
 		self.sock.send(sendData)
 		
 		if not non_block:
-			raw_data = recvall(self.sock, self.observation_space.size + self.reward_space.size + self.done_size)
-			self.last_observation = self.observation_space.observe(raw_data[:self.observation_space.size])
-			self.last_reward = self.reward_space.unpack(raw_data[self.observation_space.size:self.observation_space.size + self.reward_space.size])
-			done = bool(np.fromstring(raw_data[((self.observation_space.size + self.reward_space.size))], np.uint8)[0])
-		
-			return self.last_observation, self.last_reward, done
-	
+			return self._recv_next_state()
+
 	def sample(self):
 		return self.action_space.sample()
+
+	def _recv_next_state(self):
+		raw_data = recvall(self.sock, self.observation_space.size + self.reward_space.size + self.done_size)
+		self.last_observation = self.observation_space.observe(raw_data[:self.observation_space.size])
+		self.last_reward = self.reward_space.unpack(raw_data[self.observation_space.size:self.observation_space.size + self.reward_space.size])
+		done = bool((raw_data[((self.observation_space.size + self.reward_space.size))]))
+		
+		return self.last_observation, self.last_reward, done
 		
 if __name__ == '__main__':
 	env = Unity3DEnvironment()
 	
-	for episode in xrange(10):
-		env.reset()
-		for t in xrange(10000):
-			act = env.sample()
+	for episode in range(10):
+		obs = env.reset()
+		for t in range(10000):
+			env.render()
+			act = env.sample() * 5.0
+			#act = np.array([5.0, 0.0])
 			obs, reward, done = env.step(act, non_block=False)
 			
 			print (act, reward, done)
-			
-			env.render()
+		
 			if done:
 				break
+		print ('Episode %d' % (episode))
 	env.close()
