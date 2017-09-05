@@ -63,6 +63,11 @@ public class RGBDDataFetcher : PostEffectsBase {
         GetComponent<Camera>().depthTextureMode &= ~DepthTextureMode.Depth;
     }
 
+    void OnDestroy()
+    {
+        m_BufferTexture2D = null;
+    }
+
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         if (m_DepthMaterial && m_UseDepth)

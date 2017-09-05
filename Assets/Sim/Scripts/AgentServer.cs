@@ -160,6 +160,16 @@ public class AgentServer : EventQueueMonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        string[] args = System.Environment.GetCommandLineArgs();
+
+        for (int i = 0; i < args.Length; i++)
+        {
+            if ("port".Equals(args[i]))
+            {
+                m_Port = int.Parse(args[i + 1]);
+            }
+        }
     }
 
     override protected void Start () {

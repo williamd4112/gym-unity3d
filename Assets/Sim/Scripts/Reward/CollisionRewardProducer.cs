@@ -14,10 +14,10 @@ namespace GymUnity3D
         public float reward;
     }
 
-    public class CollisionRewardProducer : GameState
+    public class CollisionRewardProducer : RewardProducer
     {
         [SerializeField]
-        private float m_Reward = 1.0f;
+        private float m_Reward = 0.0f;
 
         [SerializeField]
         private CollisionRewardLookupEntry[] m_Entries;
@@ -39,10 +39,12 @@ namespace GymUnity3D
         void OnCollisionStay(Collision collision)
         {
             string tag = collision.gameObject.tag;
-            float reward;
+            float reward = 0.0f;
             if (m_CollisionRewardLookupTable.TryGetValue(tag, out reward))
             {
-                m_Reward = reward;
+                m_Reward += reward;
+                if (m_Reward < -1.0f) m_Reward = -1.0f;
+                if (m_Reward > 1.0f) m_Reward = 1.0f;
             }
         }
 
@@ -59,6 +61,11 @@ namespace GymUnity3D
         public override void Reset()
         {
             m_Reward = 0.0f;
+        }
+
+        public override float GetReward()
+        {
+            return m_Reward;
         }
     }
 }

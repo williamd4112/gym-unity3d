@@ -18,6 +18,7 @@ namespace Kobuki
         public override void OnReceiveFloatVector(ref float[] data)
         {
             if (data.Length >= 2) {
+                m_VehicleController.SetFrameCount(Time.frameCount);
                 m_VehicleController.SetMotor(data[0] * m_VehicleController.GetMaxTorque());
                 m_VehicleController.SetSteering(data[1] * m_VehicleController.GetMaxTorque());
             }

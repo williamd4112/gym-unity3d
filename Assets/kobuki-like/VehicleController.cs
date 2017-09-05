@@ -18,6 +18,16 @@ namespace Kobuki
         [SerializeField]
         private bool m_HumanControl = false;
 
+        private int m_FrameCount = 0;
+
+        [SerializeField]
+        private int m_FrameSkip = 5;
+
+        public void SetFrameCount(int c)
+        {
+            m_FrameCount = Time.frameCount;
+        }
+
         public float GetMaxTorque()
         {
             return maxMotorTorque;
@@ -33,8 +43,26 @@ namespace Kobuki
             m_Steering = steer;
         }
 
+        void Awake()
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if ("skip".Equals(args[i]))
+                {
+                    m_FrameSkip = int.Parse(args[i + 1]);
+                }
+            }
+        }
+
         void Update()
         {
+            if (Time.frameCount - m_FrameCount > m_FrameSkip)
+            {
+                m_Motor = 0.0f;
+                m_Steering = 0.0f;
+            }
+
             if (m_HumanControl) {
                 m_Motor = maxMotorTorque * Input.GetAxis("Vertical");
                 m_Steering = Input.GetAxis("Horizontal");

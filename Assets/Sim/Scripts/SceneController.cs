@@ -17,6 +17,7 @@ public class SceneController : SocketRawDataListener {
             case OP_RESET:
                 Debug.Log("Reset scene");
                 Scene scene = SceneManager.GetActiveScene();
+                GC.Collect();
                 SceneManager.LoadScene(scene.name);
                 break;
             default:
